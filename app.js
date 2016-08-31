@@ -53,5 +53,6 @@ app.get('/', function(req, res) {
 	});
 });
 
-http.listen(8080);
-console.log('server running...');
+http.listen(8080, function () {
+	console.log('server running...');
+});
