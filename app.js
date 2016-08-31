@@ -37,8 +37,8 @@ app.get('/', function(req, res) {
 	connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
 		d = results[results.length-1].value;
 		console.log(d);
+		res.render('index', {eventTitle : 'イベントの名前', level: getLevel(d)});
 	});
-	res.render('index', {eventTitle : 'イベントの名前', level: getLevel(d)});
 });
 
 app.listen(8080);
