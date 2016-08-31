@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 
+var http = require('http').Server(app);
+var socketio = require('socket.io')(http);
+
 var fs = require('fs');
 
 var mysql = require('mysql');
@@ -23,6 +26,13 @@ var getLevel = function (hb) {
 		return 3;
 }
 
+setInterval(function(){
+	connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
+		d = results[results.length-1].value;
+		socketio.sockets.emit('level',getLevel(d));
+	});
+}, 5000);
+
 connection.connect(function (err) {
 	if (err) {
 		console.error('error connecting: ' + err.stack);
@@ -33,6 +43,8 @@ connection.connect(function (err) {
 app.set('views', './views');
 app.set('view engine', 'pug');
 
+app.use(express.static('public'));
+
 app.get('/', function(req, res) {
 	connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
 		d = results[results.length-1].value;
@@ -41,6 +53,5 @@ app.get('/', function(req, res) {
 	});
 });
 
-app.listen(8080);
+http.listen(8080);
 console.log('server running...');
-
