@@ -13,7 +13,15 @@ var connection = mysql.createConnection({
 	database: db_cfg.name
 });
 
-var d;
+var d = 0;
+var getLevel = function (hb) {
+	if (hb < 100)
+		return 1;
+	else if (hb >= 100 && hb < 140)
+		return 2;
+	else if (hb >= 140)
+		return 3;
+}
 
 connection.connect(function (err) {
 	if (err) {
@@ -26,10 +34,11 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.get('/', function(req, res) {
-	connection.query('SELECT value from data', function(error, results, fields) {
+	connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
 		d = results[results.length-1].value;
+		console.log(d);
 	});
-	res.render('index', {eventTitle : 'イベントの名前', level: 1});
+	res.render('index', {eventTitle : 'イベントの名前', level: getLevel(d)});
 });
 
 app.listen(8080);
