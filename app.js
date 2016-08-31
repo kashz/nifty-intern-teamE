@@ -15,6 +15,7 @@ var connection = mysql.createConnection({
 	database: db_cfg.name
 });
 
+
 var d;
 connection.connect(function (err) {
 	if (err) {
@@ -23,10 +24,10 @@ connection.connect(function (err) {
 	}
 });
 
-connection.query('SELECT value from data', function(error, results, fields) {
-	d = results[0].value;
-});
 app.get('/', function(req, res) {
+	connection.query('SELECT value from data', function(error, results, fields) {
+		d = results[results.length-1].value;
+	});
 	var data = ejs.render(template,{ d: d});
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(data);
