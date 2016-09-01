@@ -55,7 +55,6 @@ connection.connect(function (err) {
 });
 
 app.set('views', './views');
-app.set('view engine', 'pug');
 
 app.use(express.static('public'));
 
@@ -63,7 +62,11 @@ app.get('/', function(req, res) {
 	connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
 		d = results[results.length-1].value;
 		console.log(d);
-		res.render('index', {eventTitle : 'イベントの名前', level: getLevel(d)});
+		fs.readFile('./views/index.html','UTF-8',function(err,data){
+			res.setHeader('Content-Type','text/html');
+			res.write(data);
+			res.end();
+		});
 	});
 });
 
