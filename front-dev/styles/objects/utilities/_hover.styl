@@ -1,0 +1,10 @@
+.hover
+  cursor pointer
+  &:hover
+    opacity .8
+
+//mobileのhoverバグ回避
+@media screen and (max-width: 740px)
+  .hover
+    &:hover
+      opacity 1
