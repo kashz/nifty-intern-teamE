@@ -22,6 +22,18 @@
     "pug": "~2.0.0-beta6"
   },
   "devDependencies": {
-    "stylus": "~0.54.5"
+    "gulp": "~3.9.1",
+    "babel-preset-es2015": "~6.14.0",
+    "gulp-load-plugins": "~1.2.4",
+    "gulp-plumber": "~1.1.0",
+    "gulp-autoprefixer": "~3.1.1",
+    "gulp-babel": "~6.1.2",
+    "gulp-watch": "~4.3.9",
+    "gulp-sourcemaps": "~1.6.0",
+    "gulp-filter": "~4.0.0",
+    "gulp-minify-css": "~1.2.4",
+    "gulp-stylus": "~2.5.0",
+    "gulp-logger": "0.0.2",
+    "es6-promise": "~3.2.1"
   }
 }
