@@ -30,17 +30,30 @@
       </div>
     </div>
   </div>
+
+
+
+  <script>
+
   var socket = io();
   const self = this;
-  self.eventName = "@nifty IoT インターン";
-  self.deviceNumAll = 0;
-
-  self.areaName1 = "18階";
-  self.areaName2 = "15階";
-  self.deviceNumArea1 = 0;
-  self.deviceNumArea2 = 0;
 
   socket.on('level', function (level) {
     console.log(level);
   });
+  socket.on('deviceCount', function (count) {
+    self.deviceNumAll = count[0];
+    self.deviceNumArea1 = count[1];
+    self.deviceNumArea2 = count[2];
+    self.update();
+  });
+  socket.on ('name', function (name) {
+    // [EventName, Area1, Area2]
+    self.eventName = name[0];
+    self.areaName1 = name[1];
+    self.areaName2 = name[2];
+    self.update();
+  });
+
+  </script>
 </app>
