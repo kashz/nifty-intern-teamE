@@ -12,45 +12,19 @@
     <meta property="og:site_name" content="サイト名"/>
     <meta property="og:description" content="サイト説明"/>
     <link rel="stylesheet" href="styles/style.css">
-    <script src="https://cdn.rawgit.com/riot/riot/master/riot+compiler.min.js"></script>
-    <title>Top Page｜サイトタイトル</title>
+    <title>Exciting NOW</title>
   </head>
   <body>
     <header>
-      <h1>Exciting Now</h1>
+      <h1>Exciting NOW</h1>
     </header>
-    <div class="l-container">
-      <div class="all_wrapper">
-        <h2>EventName</h2>
-        <div class="container">
-          <div class="heart_wrapper heart1">
-            <div class="all_heart"></div>
-          </div>
-          <div class="device_count"><span class="text">デバイス数</span><span>N 数</span></div>
-        </div>
-      </div>
-      <div class="area_wrapper">
-        <div class="area">
-          <h3>Area Name</h3>
-          <div class="container">
-            <div class="heart_wrapper heart1">
-              <div class="heart"></div>
-            </div>
-            <div class="device_count">M 数</div>
-          </div>
-        </div>
-        <div class="area">
-          <h3>Area Name</h3>
-          <div class="container">
-            <div class="heart_wrapper heart1">
-              <div class="heart"></div>
-            </div>
-            <div class="device_count">M 数</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script src="./scripts/main.js"></script>
-    <script>riot.mount('*');</script>
+
+    <app></app>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/riot/riot/master/riot+compiler.min.js"></script>
+    <script src="tags/app.tag" type="riot/tag"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>riot.mount('app');</script>
   </body>
 </html>
