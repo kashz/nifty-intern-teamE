@@ -18,12 +18,26 @@ var connection = mysql.createConnection({
 
 var d = 0;
 var getLevel = function (hb) {
-	if (hb < 100)
+	if (hb <= 79)
 		return 1;
-	else if (hb >= 100 && hb < 140)
+	else if (hb <= 90)
 		return 2;
-	else if (hb >= 140)
+	else if (hb <= 100)
 		return 3;
+	else if(hb <= 110)
+		return 4;
+	else if(hb <= 120)
+		return 5;
+	else if(hb <= 125)
+		return 6;
+	else if(hb <= 130)
+		return 7;
+	else if(hb <= 135)
+		return 8;
+	else if(hb <= 140)
+		return 9;
+	else if(hb > 140)
+		return 10;
 }
 
 setInterval(function(){
