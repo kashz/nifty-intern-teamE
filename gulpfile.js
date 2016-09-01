@@ -18,11 +18,7 @@ gulp.task('stylus', function ()  {
 		.pipe($.logger({ beforeEach: '[stylus] wrote: ' }))
 })
 
-/*
-gulp.task( 'riot', () => {
-	gulp.src('front-dev/tags/*.tag')
-}
-*/
+
 gulp.task ('default', ['stylus'])
 
 gulp.task('watch', function () {
