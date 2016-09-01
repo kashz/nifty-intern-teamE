@@ -1,0 +1,23 @@
+<app-all-wrapper>
+  <div class="all_wrapper">
+    <h2>{ eventName }</h2>
+    <div class="container">
+      <div class="heart heart1">ハート</div>
+      <div class="device_count"><span class="text">デバイス数</span><span>{ deviceNum }</span></div>
+    </div>
+  </div>
+
+  <script>
+    const self = this;
+    self.eventName = "イベント！！！！！"
+    self.deviceNum = 0;
+
+    var socket = io();
+    //TODO 盛り上がり度の表示になってるので後でデバイス数に修正
+    socket.on('level', function(level) {
+      console.log(level);
+      self.deviceNum = level;
+      self.update();
+    });
+  </script>
+</app-all-wrapper>
