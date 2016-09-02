@@ -25,7 +25,7 @@ io.on('connection', function(socket){
 
 setInterval(function () {
 	db.update();
-	io.sockets.emit('level' db.level);
+	io.sockets.emit('level', db.level);
 	io.sockets.emit('deviceCount', db.deviceCount);
 }, 15000);
 
