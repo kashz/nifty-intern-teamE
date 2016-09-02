@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="area_wrapper">
-      <div class="area">
+      <div class="area1">
         <h3>{ areaName1 }</h3>
         <div class="container">
           <div class="heart_wrapper heart1">
@@ -19,7 +19,7 @@
           <div class="device_count">{ deviceNumArea1 }</div>
         </div>
       </div>
-      <div class="area">
+      <div class="area2">
         <h3>{ areaName2 }</h3>
         <div class="container">
           <div class="heart_wrapper heart1">
@@ -30,17 +30,45 @@
       </div>
     </div>
   </div>
-  var socket = io();
-  const self = this;
-  self.eventName = "@nifty IoT インターン";
-  self.deviceNumAll = 0;
 
-  self.areaName1 = "18階";
-  self.areaName2 = "15階";
-  self.deviceNumArea1 = 0;
-  self.deviceNumArea2 = 0;
+
+
+  <script>
+
+  var socket = io();
+  var currentLevel = [1, 1, 1];
+  const self = this;
 
   socket.on('level', function (level) {
-    console.log(level);
+    // level = [ all, area1, area2 ]
+    for (var i = 0; i < 3; i++) {
+      var removeClassName = "heart" + currentLevel[i];
+      var addClassName = "heart" + level[i];
+      currentLevel[i] = level[i];
+      if (i === 0) { // all
+        $(".all_wrapper .container .heart_wrapper").removeClass(removeClassName);
+        $(".all_wrapper .container .heart_wrapper").addClass(addClassName);
+      }
+      else {  // each area
+        $(".area" + i + " .container .heart_wrapper").removeClass(removeClassName);
+        $(".area" + i + " .container .heart_wrapper").addClass(addClassName);
+      }
+    }
   });
+  socket.on('deviceCount', function (count) {
+    // count = [ all , area1, area2 ]
+    self.deviceNumAll = count[0];
+    self.deviceNumArea1 = count[1];
+    self.deviceNumArea2 = count[2];
+    self.update();
+  });
+  socket.on ('name', function (name) {
+    // name =  [EventName, Area1, Area2]
+    self.eventName = name[0];
+    self.areaName1 = name[1];
+    self.areaName2 = name[2];
+    self.update();
+  });
+
+  </script>
 </app>
