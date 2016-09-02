@@ -37,13 +37,6 @@ setInterval(function () {
 	io.sockets.emit('deviceCount', db.deviceCount);
 }, 15000);
 
-// Test Code
-// setInterval(function () {
-// 	var testLevel = [(Math.floor( Math.random() * 9 ) + 1), (Math.floor(Math.random() * 9) + 1), (Math.floor(Math.random() * 9) + 1)];
-// 	io.sockets.emit('level', testLevel);
-// 	io.sockets.emit('deviceCount', testLevel);
-// }, 5000);
-
 http.listen(8080, function () {
 	console.log('server running...');
 });
