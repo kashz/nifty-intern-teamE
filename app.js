@@ -24,16 +24,16 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket){
 	io.sockets.emit('name', ["@nifty IoT インターン", "18階", "15階"]);
-
-	io.sockets.emit('level', [6, 5, 9]);
-	io.sockets.emit('deviceCount', [0, 0, 0]);
 	db.update();
+	io.sockets.emit('level', db.level);
+	io.sockets.emit('deviceCount', db.deviceCount);
   console.log('a user connected');
 });
 
 setInterval(function () {
 	db.update();
-	io.sockets.emit('level' db.level);
+
+	io.sockets.emit('level', db.level);
 	io.sockets.emit('deviceCount', db.deviceCount);
 }, 15000);
 
