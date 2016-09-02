@@ -7,14 +7,6 @@ var db = require ('./update_db');
 var heartrate = require ('./heartrate');
 
 
-var hr = 120;
-// setInterval(function(){
-// 	connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
-// 		d = results[results.length-1].value;
-// 		socketio.sockets.emit('level',getLevel(d));
-// 	});
-// }, 5000);
-
 app.set('views', './views');
 app.use(express.static('public'));
 
