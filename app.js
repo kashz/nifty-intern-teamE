@@ -25,10 +25,17 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket){
 	io.sockets.emit('name', ["@nifty IoT インターン", "18階", "15階"]);
 
-	io.sockets.emit('level', [3, 2, 1]);
+	io.sockets.emit('level', [6, 5, 9]);
 	io.sockets.emit('deviceCount', [0, 0, 0]);
   console.log('a user connected');
 });
+
+// Test Code
+// setInterval(function () {
+// 	var testLevel = [(Math.floor( Math.random() * 9 ) + 1), (Math.floor(Math.random() * 9) + 1), (Math.floor(Math.random() * 9) + 1)];
+// 	io.sockets.emit('level', testLevel);
+// 	io.sockets.emit('deviceCount', testLevel);
+// }, 5000);
 
 http.listen(8080, function () {
 	console.log('server running...');
