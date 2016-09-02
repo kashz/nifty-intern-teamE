@@ -6,7 +6,7 @@
         <div class="heart_wrapper heart1">
           <div class="all_heart"></div>
         </div>
-        <div class="device_count">{ deviceNumAll }</div>
+        <div class="device_count">デバイス接続数: { deviceNumAll }</div>
       </div>
     </div>
     <div class="area_wrapper">
@@ -16,7 +16,7 @@
           <div class="heart_wrapper heart1">
             <div class="heart"></div>
           </div>
-          <div class="device_count">{ deviceNumArea1 }</div>
+          <div class="device_count">デバイス接続数: { deviceNumArea1 }</div>
         </div>
       </div>
       <div class="area2">
@@ -25,7 +25,7 @@
           <div class="heart_wrapper heart1">
             <div class="heart"></div>
           </div>
-          <div class="device_count">{ deviceNumArea2 }</div>
+          <div class="device_count">デバイス接続数: { deviceNumArea2 }</div>
         </div>
       </div>
     </div>
@@ -35,13 +35,15 @@
 
   <script>
 
-  var socket = io();
+  var socket = io("http://222.158.198.88/");
   var currentLevel = [1, 1, 1];
   const self = this;
 
   socket.on('level', function (level) {
     // level = [ all, area1, area2 ]
     for (var i = 0; i < 3; i++) {
+      if (level[i] === currentLevel[i])
+        continue;
       var removeClassName = "heart" + currentLevel[i];
       var addClassName = "heart" + level[i];
       currentLevel[i] = level[i];
