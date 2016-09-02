@@ -36,9 +36,17 @@ exports.update = function (query) {
 			}
 		});
 		exports.deviceCount = [results.length, ssid1_num, ssid2_num];
-		exports.level = [heartrate.getLevel(all_total_hr / results.length),
-											heartrate.getLevel(ssid1_total_hr / ssid1_num),
-											heartrate.getLevel(ssid2_total_hr / ssid2_num)
-										];
+		var all_level = ssid1_level = ssid2_level = 1;
+		// 0で割ることを防ぐためのif文
+		if( all_total_hr !== 0 || results.length !== 0 ) {
+			all_level = heartrate.getLevel(all_total_hr / results.length);
+		}
+		if( ssid1_num !== 0 || ssid1_total_hr !== 0 ) {
+			ssid1_level = heartrate.getLevel(ssid1_total_hr / ssid1_num);
+		}
+		if( ssid2_num !== 0 || ssid2_total_hr !== 0 ) {
+			ssid2_level = heartrate.getLevel(ssid2_total_hr / ssid2_num);
+		}
+		exports.level = [all_level, ssid1_level, ssid2_level];
   });
 };
