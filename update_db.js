@@ -24,7 +24,7 @@ exports.update = function (query) {
 		results.forEach(function(result) {
 			var hr = result.value % 1000;
 			all_total_hr = all_total_hr + hr;
-			if( result.value /1000 == 1 ) {
+			if( Math.floor(result.value / 1000) == 1 ) {
 				ssid1_num = ssid1_num + 1;
 				ssid1_total_hr = ssid1_total_hr + hr;
 			} else {
