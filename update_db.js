@@ -17,8 +17,29 @@ connection.connect(function (err) {
 });
 
 exports.update = function (query) {
-  connection.query('SELECT value from data where event_type_id=1', function(error, results, fields) {
-    retData = results;
+  connection.query('select * from data where (event_type_id, timestamp) in (select event_type_id, max(timestamp) from data group by event_type_id)', function(error, results, fields) {
+		console.log(results);
+		var ssid1_num = 0, ssid2_num = 0;
+		var all_total_hr = 0, ssid1_total_hr = 0, ssid2_total_hr = 0;
+		results.forEach(function(result) {
+			var hr = result.value % 1000;
+			all_total_hr = all_total_hr + hr;
+			if( result.value /1000 == 1 ) {
+				ssid1_num = ssid1_num + 1;
+				ssid1_total_hr = ssid1_total_hr + hr;
+			} else {
+				ssid2_num = ssid2_num + 1;
+				ssid2_total_hr = ssid2_total_hr + hr;
+			}
+		});
+		console.log(results.length);
+		console.log(ssid1_num);
+		console.log(ssid2_num);
+		console.log(all_total_hr / results.length);
+		console.log(ssid1_total_hr / ssid1_num);
+		console.log(ssid2_total_hr / ssid2_num);
+		return [results.length, ssid1_num, ssid2_num];
+		//retData = results;
     // exports.heartRateLevel = [int, int, int]
   });
 };

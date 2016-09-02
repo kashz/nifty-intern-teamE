@@ -27,6 +27,7 @@ io.on('connection', function(socket){
 
 	io.sockets.emit('level', [3, 2, 1]);
 	io.sockets.emit('deviceCount', [0, 0, 0]);
+	db.update();
   console.log('a user connected');
 });
 
