@@ -35,7 +35,7 @@
 
   <script>
 
-  var socket = io("http://222.158.198.88/");
+  var socket = io();
   var currentLevel = [1, 1, 1];
   const self = this;
 

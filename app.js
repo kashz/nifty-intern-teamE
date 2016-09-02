@@ -15,7 +15,7 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket){
-	io.sockets.emit('name', ["@nifty IoT インターン", "18階", "15階"]);
+	io.sockets.emit('name', ["@nifty IoT インターン", "エリア1", "エリア2"]);
 	db.update();
 	io.sockets.emit('level', db.level);
 	io.sockets.emit('deviceCount', db.deviceCount);
