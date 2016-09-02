@@ -31,6 +31,12 @@ io.on('connection', function(socket){
   console.log('a user connected');
 });
 
+setInterval(function () {
+	db.update();
+	io.sockets.emit('level' db.level);
+	io.sockets.emit('deviceCount', db.deviceCount);
+}, 15000);
+
 // Test Code
 // setInterval(function () {
 // 	var testLevel = [(Math.floor( Math.random() * 9 ) + 1), (Math.floor(Math.random() * 9) + 1), (Math.floor(Math.random() * 9) + 1)];

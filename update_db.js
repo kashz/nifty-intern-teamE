@@ -7,7 +7,6 @@ var connection = mysql.createConnection({
 	password: db_cfg.passwd,
 	database: db_cfg.name
 });
-var retData = {};
 
 connection.connect(function (err) {
 	if (err) {
@@ -15,6 +14,10 @@ connection.connect(function (err) {
 		return;
 	}
 });
+
+
+exports.level = {};
+exports.deviceCount = {};
 
 exports.update = function (query) {
   connection.query('select * from data where (event_type_id, timestamp) in (select event_type_id, max(timestamp) from data group by event_type_id)', function(error, results, fields) {
@@ -39,11 +42,5 @@ exports.update = function (query) {
 		console.log(ssid1_total_hr / ssid1_num);
 		console.log(ssid2_total_hr / ssid2_num);
 		return [results.length, ssid1_num, ssid2_num];
-		//retData = results;
-    // exports.heartRateLevel = [int, int, int]
   });
 };
-
-setInterval (function () {
-
-}, 15000);
