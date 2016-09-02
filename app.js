@@ -26,7 +26,7 @@ setInterval(function () {
 	db.update();
 	io.sockets.emit('level', db.level);
 	io.sockets.emit('deviceCount', db.deviceCount);
-}, 15000);
+}, 5000);
 
 http.listen(8080, function () {
 	console.log('server running...');
