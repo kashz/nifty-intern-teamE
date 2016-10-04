@@ -1,6 +1,6 @@
 node_modules/
+bower_components/
 config/db_settings.js
 
 *.swp
 .DS_Store
-
