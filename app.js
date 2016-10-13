@@ -30,4 +30,5 @@ setInterval(function () {
 
 http.listen(8080, function () {
 	console.log('server running...');
+	db.csv();
 });

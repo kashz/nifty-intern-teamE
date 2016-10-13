@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var fs = require('fs');
 var db_cfg = require('./config/db_settings.js');
 var connection = mysql.createConnection({
 	host    : db_cfg.host,
@@ -15,6 +16,20 @@ connection.connect(function (err) {
 	}
 });
 
+exports.csv = function () {
+	connection.query('select * from data_type', function(error, data_type_results, fields) {
+		data_type_results.forEach(function(data_type_result) {
+			var csv_text = "";
+			connection.query('select * from data where event_type_id = ?', [data_type_result.id], function(error, data_results, fields) {
+				data_results.forEach(function(data_result) {
+					csv_text = csv_text + data_result.value + ',' + data_result.timestamp + '\n';
+				var path = data_type_result.origin_device_id + '_data.csv';
+				fs.writeFile(path, csv_text);
+				});
+			});
+		});
+	});
+}
 
 exports.level = {};
 exports.deviceCount = {};
