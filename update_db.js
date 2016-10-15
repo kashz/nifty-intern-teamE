@@ -18,14 +18,20 @@ connection.connect(function (err) {
 
 exports.csv = function () {
 	connection.query('select * from data_type', function(error, data_type_results, fields) {
+		var all_csv_text = "";
 		data_type_results.forEach(function(data_type_result) {
 			var csv_text = "";
 			connection.query('select * from data where event_type_id = ?', [data_type_result.id], function(error, data_results, fields) {
 				data_results.forEach(function(data_result) {
 					csv_text = csv_text + data_result.value + ',' + data_result.timestamp + '\n';
+				});
 				var path = data_type_result.origin_device_id + '_data.csv';
 				fs.writeFile(path, csv_text);
-				});
+				all_csv_text = all_csv_text + csv_text;
+				if (data_type_result == data_type_results[data_type_results.length-1]) {
+					var all_csv_path = "all_data.csv";
+					fs.writeFile(all_csv_path, all_csv_text);
+				}
 			});
 		});
 	});
