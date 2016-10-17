@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 var fs = require('fs');
+var moment = require("moment");
 var db_cfg = require('./config/db_settings.js');
 var connection = mysql.createConnection({
 	host    : db_cfg.host,
@@ -16,25 +17,95 @@ connection.connect(function (err) {
 	}
 });
 
-exports.csv = function () {
-	connection.query('select * from data_type', function(error, data_type_results, fields) {
-		var all_csv_text = "";
-		data_type_results.forEach(function(data_type_result) {
-			var csv_text = "";
-			connection.query('select * from data where event_type_id = ?', [data_type_result.id], function(error, data_results, fields) {
-				data_results.forEach(function(data_result) {
-					csv_text = csv_text + data_result.value + ',' + data_result.timestamp + '\n';
-				});
-				var path = data_type_result.origin_device_id + '_data.csv';
-				fs.writeFile(path, csv_text);
-				all_csv_text = all_csv_text + csv_text;
-				if (data_type_result == data_type_results[data_type_results.length-1]) {
-					var all_csv_path = "all_data.csv";
-					fs.writeFile(all_csv_path, all_csv_text);
+var sum = function(arr, fn) {
+    if (fn) {
+        return sum(arr.map(fn));
+    }
+    else {
+        return arr.reduce(function(prev, current, i, arr) {
+                return prev+current;
+        });
+    }
+};
+
+var average = function(arr, fn) {
+    return sum(arr, fn)/arr.length;
+};
+
+var all_csv = function () {
+	var all_avg_data_csv = "";
+	connection.query('select * from data order by data.timestamp asc', function(error, results, fields) {
+		var i = 0;
+		var prev_timestamp;
+		var sum_array = [];
+
+		results.forEach(function(result) {
+			if (i == 0) {
+				prev_timestamp = result.timestamp;
+				sum_array.push(result.value % 1000);
+			}else {
+				if (moment(result.timestamp).isBetween(prev_timestamp, moment(prev_timestamp).add(15, 'minutes').format())) {
+					sum_array.push(result.value % 1000);
+					if (i == results.length-1) {
+						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+					}
+				} else {
+					all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+					prev_timestamp = result.timestamp;
+					sum_array = [];
+					sum_array.push(result.value % 1000);
+					if (i == results.length-1) {
+						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+					}
 				}
-			});
+			}
+			i = i + 1;
 		});
+		fs.writeFile("all_avg_data.csv", all_avg_data_csv);
 	});
+}
+
+var area_csv = function () {
+	var area = 1;
+	for (var i = 1; i <= 2; ++i) {
+		connection.query('select * from data where FLOOR(data.value/1000) = ? order by data.timestamp asc', [i], function(error, results, fields) {
+			var prev_timestamp;
+			var sum_array = [];
+			var area_csv = "";
+			var j = 0;
+			results.forEach(function(result) {
+				if (j == 0) {
+					prev_timestamp = result.timestamp;
+					sum_array.push(result.value % 1000);
+				} else {
+					if (moment(result.timestamp).isBetween(prev_timestamp, moment(prev_timestamp).add(15, 'minutes').format())) {
+						sum_array.push(result.value % 1000);
+						if (j == results.length-1) {
+							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+						}
+					} else {
+						area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+						prev_timestamp = result.timestamp;
+						sum_array = [];
+						sum_array.push(result.value % 1000);
+						if (j == results.length-1) {
+							console.log(prev_timestamp);
+							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+						}
+					}
+				}
+				j = j + 1;
+			});
+			var path = "area"+ area +"_data.csv";
+			fs.writeFile(path, area_csv);
+			area = area + 1;
+		});
+	}
+}
+
+exports.csv = function () {
+	all_csv();
+	area_csv();
 }
 
 exports.level = {};
