@@ -13,6 +13,9 @@ app.use(express.static('public'));
 app.get('/', function(req, res) {
 	res.sendFile (__dirname + '/views/index.html');
 });
+app.get('/history', function(req, res) {
+	res.sendFile (__dirname + '/views/history.html');
+});
 
 io.on('connection', function(socket){
 	io.sockets.emit('name', ["@nifty IoT インターン", "エリア1", "エリア2"]);
@@ -28,7 +31,7 @@ setInterval(function () {
 	io.sockets.emit('deviceCount', db.deviceCount);
 }, 5000);
 
-http.listen(8080, function () {
+http.listen(8000, function () {
 	console.log('server running...');
 	db.csv();
 });
