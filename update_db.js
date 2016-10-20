@@ -61,7 +61,7 @@ var all_csv = function () {
 			}
 			i = i + 1;
 		});
-		fs.writeFile("all_avg_data.csv", all_avg_data_csv);
+		fs.writeFile("./views/data/all_avg_data.csv", all_avg_data_csv);
 	});
 }
 
@@ -96,7 +96,7 @@ var area_csv = function () {
 				}
 				j = j + 1;
 			});
-			var path = "area"+ area +"_data.csv";
+			var path = "./views/data/area"+ area +"_data.csv";
 			fs.writeFile(path, area_csv);
 			area = area + 1;
 		});
