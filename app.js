@@ -16,6 +16,9 @@ app.get('/', function(req, res) {
 app.get('/history', function(req, res) {
 	res.sendFile (__dirname + '/views/history.html');
 });
+app.get('/all_csv', function(req, res) {
+	res.sendFile (__dirname + '/views/data/all_avg_data.csv');
+});
 
 io.on('connection', function(socket){
 	io.sockets.emit('name', ["@nifty IoT インターン", "エリア1", "エリア2"]);

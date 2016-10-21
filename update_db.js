@@ -33,7 +33,7 @@ var average = function(arr, fn) {
 };
 
 var all_csv = function () {
-	var all_avg_data_csv = "";
+	var all_avg_data_csv = "value,time\n";
 	connection.query('select * from data order by data.timestamp asc', function(error, results, fields) {
 		var i = 0;
 		var prev_timestamp;
@@ -47,7 +47,7 @@ var all_csv = function () {
 				if (moment(result.timestamp).isBetween(prev_timestamp, moment(prev_timestamp).add(15, 'minutes').format())) {
 					sum_array.push(result.value % 1000);
 					if (i == results.length-1) {
-						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss");
 					}
 				} else {
 					all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
@@ -55,7 +55,7 @@ var all_csv = function () {
 					sum_array = [];
 					sum_array.push(result.value % 1000);
 					if (i == results.length-1) {
-						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss");
 					}
 				}
 			}
@@ -71,7 +71,7 @@ var area_csv = function () {
 		connection.query('select * from data where FLOOR(data.value/1000) = ? order by data.timestamp asc', [i], function(error, results, fields) {
 			var prev_timestamp;
 			var sum_array = [];
-			var area_csv = "";
+			var area_csv = "value,time\n";
 			var j = 0;
 			results.forEach(function(result) {
 				if (j == 0) {
@@ -81,7 +81,7 @@ var area_csv = function () {
 					if (moment(result.timestamp).isBetween(prev_timestamp, moment(prev_timestamp).add(15, 'minutes').format())) {
 						sum_array.push(result.value % 1000);
 						if (j == results.length-1) {
-							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss");
 						}
 					} else {
 						area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
@@ -89,8 +89,7 @@ var area_csv = function () {
 						sum_array = [];
 						sum_array.push(result.value % 1000);
 						if (j == results.length-1) {
-							console.log(prev_timestamp);
-							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss") + '\n';
+							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD hh:mm:ss");
 						}
 					}
 				}
