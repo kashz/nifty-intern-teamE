@@ -47,15 +47,15 @@ var all_csv = function () {
 				if (moment(result.timestamp).isBetween(prev_timestamp, moment(prev_timestamp).add(15, 'minutes').format())) {
 					sum_array.push(result.value % 1000);
 					if (i == results.length-1) {
-						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD HH:mm:ss");
+						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).add(9, 'hour').format("YYYY-MM-DD HH:mm:ss");
 					}
 				} else {
-					all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD HH:mm:ss") + '\n';
+					all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).add(9, 'hour').format("YYYY-MM-DD HH:mm:ss") + '\n';
 					prev_timestamp = result.timestamp;
 					sum_array = [];
 					sum_array.push(result.value % 1000);
 					if (i == results.length-1) {
-						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD HH:mm:ss");
+						all_avg_data_csv = all_avg_data_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).add(9, 'hour').format("YYYY-MM-DD HH:mm:ss");
 					}
 				}
 			}
@@ -81,15 +81,15 @@ var area_csv = function () {
 					if (moment(result.timestamp).isBetween(prev_timestamp, moment(prev_timestamp).add(15, 'minutes').format())) {
 						sum_array.push(result.value % 1000);
 						if (j == results.length-1) {
-							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD HH:mm:ss");
+							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).add(9, 'hour').format("YYYY-MM-DD HH:mm:ss");
 						}
 					} else {
-						area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD HH:mm:ss") + '\n';
+						area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).add(9, 'hour').format("YYYY-MM-DD HH:mm:ss") + '\n';
 						prev_timestamp = result.timestamp;
 						sum_array = [];
 						sum_array.push(result.value % 1000);
 						if (j == results.length-1) {
-							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).format("YYYY-MM-DD HH:mm:ss");
+							area_csv = area_csv + Math.floor(average(sum_array)) + ',' + moment(prev_timestamp).add(9, 'hour').format("YYYY-MM-DD HH:mm:ss");
 						}
 					}
 				}
