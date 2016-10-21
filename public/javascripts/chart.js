@@ -43,14 +43,14 @@ AmCharts.loadFile( "./all_csv", {}, function( response ) {
 
     },
     "chartCursor": {
-        "categoryBalloonDateFormat": "YYYY-MM-DD HH:mm:ss",
+        "categoryBalloonDateFormat": "YYYY-MM-DD HH:NN:SS",
         "cursorAlpha": 0,
         "valueLineEnabled":true,
         "valueLineBalloonEnabled":true,
         "valueLineAlpha":0.5,
         "fullWidth":true
     },
-    "dataDateFormat": "YYYY-MM-DD HH:mm:ss",
+    "dataDateFormat": "YYYY-MM-DD HH:NN:SS",
     "categoryField": "time",
     "categoryAxis": {
         "minPeriod": "ss",
